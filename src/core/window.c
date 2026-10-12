@@ -26,7 +26,7 @@
 #include "version.h"
 #include "window.h"
 
-//#define C8_WINDOW_SIZE (800)
+#define C8_WINDOW_SIZE (800)
 
 /*********************************************************************************/
 
@@ -46,7 +46,7 @@ GLFWwindow* c8_gui_init(void)
 
 	glfwSetErrorCallback(c8_err_callback);
 
-	return glfwCreateWindow(640, 480, "Chippy - C8 Emulator v" C8_VERSION, NULL, NULL);
+	return glfwCreateWindow(C8_WINDOW_SIZE, C8_WINDOW_SIZE, "Chippy - C8 Emulator v" C8_VERSION, NULL, NULL);
 }
 
 void c8_gui_deinit(GLFWwindow* window)

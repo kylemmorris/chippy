@@ -27,7 +27,6 @@
 
 #include "emulator.h"
 #include "log.h"
-#include "c8errors.h"
 #include "version.h"
 
 // The space reserved for the interpreter
@@ -59,6 +58,36 @@ struct c8_emulator
 };
 
 static struct c8_emulator _emulator;
+
+/*********************************************************************************/
+
+void c8_nibbles(U16 instruction, U8* n0_msn, U8* n1, U8* n2, U8* n3_lsn)
+{
+    // Mask the nibble we want, and
+    // then shift it to the least-significant
+    // nibble (lsn) to get the final value into
+    // a U8.
+    if (c8_big_endian())
+    {
+        // Big-Endian
+        // 0000 0000 0000 0000 [16 bits]
+        // ^msn                [ 4 bits]
+        *n3_lsn = (U8)(instruction & 0x000F);
+        *n2     = (U8)((instruction & 0x00F0) >> 4);
+        *n1     = (U8)((instruction & 0x0F00) >> 8);
+        *n0_msn = (U8)((instruction & 0xF000) >> 12);
+    }
+    else
+    {
+        // Little-Endian
+        // 0000 0000 0000 0000 [16 bits]
+        //                ^msn [ 4 bits]
+        *n0_msn = (U8)(instruction & 0x000F);
+        *n1     = (U8)((instruction & 0x00F0) >> 4);
+        *n2     = (U8)((instruction & 0x0F00) >> 8);
+        *n3_lsn = (U8)((instruction & 0xF000) >> 12);
+    }
+}
 
 /*********************************************************************************/
 
@@ -211,11 +240,11 @@ void c8_emu_show_state(void)
     {
         if(_emulator.sp == (i-1))
         {
-            printf("[0x%04X] <sp \n", _emulator.stack[i-1]);
+            printf("["U16_HEX_FMT"] <sp \n", _emulator.stack[i-1]);
         }
         else
         {
-            printf("[0x%04X]\n", _emulator.stack[i-1]);
+            printf("["U16_HEX_FMT"]\n", _emulator.stack[i-1]);
         }
     }
 

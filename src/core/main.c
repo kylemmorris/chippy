@@ -33,59 +33,27 @@
 
 int main(int argc, const char* argv[])
 {
-    printf("*******************************************\n");
     printf("%s", c8_banner);
-    printf("*******************************************\n");
 
-    // chippy [command] (flags) input
-    // Commands:
-    // > run: Builds & runs an assembly or CHIPSCRIPT file.
-    // > build: Only builds an assembly or CHIPSCRIPT file. Outputs as raw binary.
-    // > disa: Disassembles a binary input file.
-    // Flags:
-    // > --debug: Provides a line-by-line debugger during run & build
-
-    // Init
     c8_log("Starting up...");
     c8_log("Endianess identified: %s", (c8_big_endian() ? "big" : "little"));
+
     c8_emu_init();
+    GLFWwindow* window = c8_gui_init();
 
-    // Create our window.
-    // https://discourse.glfw.org/t/multithreading-glfw/573/6
-    //GLFWwindow* window = c8_gui_init();
-    //if (!window)
-    //{
-    //    c8_log_error("Could not init GUI. Aborting.");
-    //    return EXIT_FAILURE;
-    //}
-
-    // No args = interpreter
     if(argc == 1)
     {
         c8_repl();
     }
-
-    // 1 arg = input file
-    if (argc == 2)
+    else if (argc == 2)
     {
-        // If the file cannot be read, the program
-        // terminates
         char* file_in = c8_read_file(argv[1]);
-
+        // TODO: Do something with file
         c8_free(file_in);
     }
 
-    // Parse args
-    for(int i = 1; i < argc; i++)
-    {
-        // ....
-    }
-
-    // Deinit
+    c8_gui_deinit(window);
     c8_emu_deinit();
-    //c8_gui_deinit(window);
+    c8_log("Shutdown successful.");
     return EXIT_SUCCESS;
 }
-
-
-

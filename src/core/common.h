@@ -27,8 +27,8 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
 
-#include "c8errors.h"
 #include "platform.h"
 
 /*
@@ -53,7 +53,7 @@
  * 1111 = F
  */
 
- /*******************************/
+/*********************************************************************************/
 
 // Unsigned 8-bit integer [1 byte / 2 nibbles] 0 to 255
 typedef uint8_t U8;
@@ -73,14 +73,32 @@ typedef uint16_t U16;
 // Hex format for U16s
 #define U16_HEX_FMT "0x%04X"
 
-/*******************************/
+/*********************************************************************************/
 
-// Extracts all 4 nibbles from
-// the given 16-bit value. Note that
-// n0 is the most significant nibble, 
-// and n3 is the least. We read left-to-right
-// like you would big-endian, however this 
-// function works for either endianness.
-void c8_nibbles(U16 instruction, U8* n0_msn, U8* n1, U8* n2, U8* n3_lsn);
+// Error thrown when the input given to
+// the Chippy program is invalid.
+#define C8_ERROR_INVALID_INPUT          (0x1110)
+
+// Error thrown when some part of the
+// interpreter or program tries to access
+// memory outside the space provided.
+#define C8_ERROR_INVALID_MEMORY         (0x1111)
+
+// Error thrown when there is some
+// exceptional internal issue.
+#define C8_ERROR_INTERNAL_EXCEPTION     (0x2222)
+
+// Error thrown when an
+// assertion fails.
+#define C8_ERROR_ASSERT_FAILURE         (0x3331)
+
+/*********************************************************************************/
+
+// Asserts the condition.
+void c8_assert(bool condition);
+
+// Asserts n is between low and
+// high (inclusive).
+void c8_assert_range(int n, int low, int high);
 
 #endif // C8_H_COMMON

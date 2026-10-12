@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "c8errors.h"
+#include "common.h"
 #include "platform.h"
 #include "log.h"
 
