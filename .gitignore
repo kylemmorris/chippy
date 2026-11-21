@@ -33,6 +33,7 @@
 
 # Builds
 build/*
+.vs/*
 
 # clangd-12
 .cache/*

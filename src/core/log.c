@@ -30,7 +30,7 @@
 static const char* const _logFileName = "chippy_log.txt";
 static const char* const _timeFormat = "%X";
 
-static void _log(const char* type, const char* fmt, va_list args)
+static void c8_log(const char* type, const char* fmt, va_list args)
 {
     static FILE* _logFile = NULL;
     static int _firstCall = 1;
@@ -96,11 +96,11 @@ static void _log(const char* type, const char* fmt, va_list args)
 
 /**********************************************************************************/
 
-void c8_log(const char* msgFmt, ...)
+void c8_log_info(const char* msgFmt, ...)
 {
     va_list args;
     va_start(args, msgFmt);
-    _log("INFO", msgFmt, args);
+    c8_log("INFO", msgFmt, args);
     va_end(args);
 }
 
@@ -108,7 +108,7 @@ void c8_log_warn(const char* msgFmt, ...)
 {
     va_list args;
     va_start(args, msgFmt);
-    _log("WARN", msgFmt, args);
+    c8_log("WARN", msgFmt, args);
     va_end(args);
 }
 
@@ -116,6 +116,6 @@ void c8_log_error(const char* msgFmt, ...)
 {
     va_list args;
     va_start(args, msgFmt);
-    _log("!ERR", msgFmt, args);
+    c8_log("!ERR", msgFmt, args);
     va_end(args);
 }

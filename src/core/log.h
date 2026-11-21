@@ -32,7 +32,7 @@
 // Logs a message "time [INFO] msg\n" to
 // console & log file. Use this for
 // user feedback.
-void c8_log(const char* msgFmt, ...);
+void c8_log_info(const char* msgFmt, ...);
 
 // Logs a message "time [WARN] msg\n" to
 // console & log file. Use this for

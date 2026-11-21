@@ -27,7 +27,7 @@
 
 #include "version.h"
 #include "repl.h"
-#include "emulator.h"
+#include "vm.h"
 #include "log.h"
 #include "window.h"
 
@@ -35,12 +35,12 @@ int main(int argc, const char* argv[])
 {
     printf("%s", c8_banner);
 
-    c8_log("Starting up...");
-    c8_log("Endianess identified: %s", (c8_big_endian() ? "big" : "little"));
+    c8_log_info("Starting up...");
+    c8_log_info("Endianess identified: %s", (c8_big_endian() ? "big" : "little"));
 
-    c8_emu_init();
-    GLFWwindow* window = c8_gui_init();
+    c8_vm_init();
 
+    //GLFWwindow* window = c8_gui_init();
     if(argc == 1)
     {
         c8_repl();
@@ -52,8 +52,8 @@ int main(int argc, const char* argv[])
         c8_free(file_in);
     }
 
-    c8_gui_deinit(window);
-    c8_emu_deinit();
-    c8_log("Shutdown successful.");
+    //c8_gui_deinit(window);
+    c8_vm_deinit();
+    c8_log_info("Shutdown successful.");
     return EXIT_SUCCESS;
 }

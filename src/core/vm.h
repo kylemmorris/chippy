@@ -22,32 +22,32 @@
  *
  **********************************************************************************/
 
-#ifndef C8_H_EMULATOR
-#define C8_H_EMULATOR
+#ifndef C8_H_VM
+#define C8_H_VM
 
 #include "common.h"
 
 /**********************************************************************************/
 
-// Initializes the emulator.
-void c8_emu_init(void);
+// Initializes the VM.
+void c8_vm_init(void);
 
-// Loads the emulator's program
+// Loads the virtual machine's program
 // data section with the ROM.
 // If there is not enough memory
 // for this data, the program is terminated.
-void c8_emu_load(U16* program_data, U16 size);
+void c8_vm_load(U16* program_data, U16 size);
 
 // Performs a single instruction.
-void c8_emu_interp(U16 instruction);
+void c8_vm_interp(U16 instruction);
 
 // De-initializes the emulator.
-void c8_emu_deinit(void);
+void c8_vm_deinit(void);
 
 /**********************************************************************************/
 
 // Displays the current state of
 // the emulator. Prints to STDOUT.
-void c8_emu_show_state(void);
+void c8_vm_show_state(void);
 
 #endif // C8_H_EMULATOR

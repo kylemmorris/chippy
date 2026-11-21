@@ -1,39 +1,40 @@
 # Chippy
-Chippy is my take on a [Chip-8](https://en.wikipedia.org/wiki/CHIP-8) emulator, written in C. This is a little project I am embarking on to learn more about computer architecture. I plan to take this experience with me as I write my own virtual machine & language (someday).
+Chippy is my take on a [Chip-8](https://en.wikipedia.org/wiki/CHIP-8) emulator, written in C. This is a little project I am embarking on to learn more about computer architecture.
 
 # Status
 This is a work-in-progress. A basic REPL (Read-Eval-Print-Loop) exists that implements a couple basic opcodes.
 
 # Building
 ```bash
-chippy$: mkdir build && cd build
+chippy$: mkdir build
+chippy$: cd build
 chippy/build$: cmake -S .. -B .
 chippy/build$: make
 ```
 
 # Planned Features
-- **Emulator (emu)**: Emulates a CHIP-8 machine.
-- **Assembler (asm)**: Converts CHIP-8 assembly (in `*.c8a` files, defined [here](assembly_language.md)) into machine code for the Emulator.
-- **Disassembler (disa)**: Disassembles a CHIP-8 ROM into CHIP-8 assembly.
-- **Debugger (dbg)**: A debugging utility for the emulator.
-- (Stretch) **Simple High-Level Language**: A high-level language called CHIPSCRIPT (`*.chs`) that compiles to CHIP-8 assembly. TBD on what this would look like. Focusing on the other features first.
-
-See the design of the system [here](implementation).
+- Virtual Machine: Implements the fundamental CHIP-8 instruction set (not Super CHIP-8 at this time).
+- Assembler: Converts CHIP-8 assemby (defined [here](doc/assembly_language.md)) into machine code.
+- Disassembler: Performs the inverse operation of the Assembler.
+- Debugger: A simple debugging utility which, at this time, means step-through execution, intermediate
+  inputs, and state printing.
 
 # Running
-Chippy's CLI will look like this:
+Currently, it only supports a Read-Eval-Print-Loop (REPL),
+by providing no arguments:
 ```bash
-chippy [command] (flags) input
-```
-
-On no input, it starts its interpreter from a fresh state. At this time, the REPL is the only option, so:
-```shell
 chippy
 ```
 
+However, the following structure will be implemented, through
+it's still up in the air:
+```shell
+chippy command <flags> input_file
+```
+
 ## Commands
-- `run`: Emulates a supported file.
-- `build`: Only builds an assembly or CHIPSCRIPT file. Outputs it as raw `input`.
-- `disa`: Disassembles a binary input file to assembly.
+- `run`: Runs an inputted CHIP-8 ROM. If the input is a CHIP-8 ROM.
+- `asm`: Assembles an inputted assembly file (`*.c8asm`).
+- `dasm`: Disassembles a CHIP-8 ROM to assembly.
 ## Flags
-- `--debug`: Provides a line-by-line debugger during `build` and `run` modes
+- `--debug`: Provides a line-by-line debugger during `run`.
