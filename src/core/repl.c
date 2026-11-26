@@ -31,6 +31,7 @@
 #include "repl.h"
 #include "platform.h"
 #include "common.h"
+#include "vm.h"
 #include "assembler.h"
 
 typedef enum c8_repl_mode
@@ -43,7 +44,7 @@ typedef enum c8_repl_mode
 #define C8_LINE_MAX 1024
 
 static char _user_input[C8_LINE_MAX];
-static enum c8_repl_mode_t _mode = C8_REPL_MODE_RAW;
+static c8_repl_mode_t _mode = C8_REPL_MODE_RAW;
 
 /*********************************************************************************/
 
@@ -139,6 +140,11 @@ static void c8_handle_asm(void)
     c8_asm_load(_user_input);
     c8_asm_status_t status = C8_ASM_STATUS_OK;
     U16 result = 0;
+
+    status = c8_asm_emit(&result);
+    printf("> status: %d; result: " U8_HEX_FMT "\n", status, result);
+
+    #if 0
     while (1)
     {
         status = c8_asm_emit(&result);
@@ -147,9 +153,9 @@ static void c8_handle_asm(void)
             case C8_ASM_STATUS_OK:
             {
                 c8_vm_interp(result);
-#ifdef C8_DEBUG
+                #ifdef C8_DEBUG
                 c8_vm_show_state();
-#endif
+                #endif
                 break;
             }
             case C8_ASM_STATUS_DONE:
@@ -166,13 +172,14 @@ static void c8_handle_asm(void)
             }
         }
     }
+    #endif
 }
 
 static void c8_help(void)
 {
     printf("*******************************************\n");
     printf("This is the CHIP-8 interpreter.\n");
-    printf("Exit with 'quit' of 'exit'.\n");
+    printf("Exit with 'quit' or 'exit'.\n");
     printf("Type 'clear' to clear the console.\n");
     printf("Type 'state' to show the emulator's state.\n");
     printf("Type 'help' to see this message.\n");

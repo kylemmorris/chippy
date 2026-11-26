@@ -29,11 +29,10 @@
 #include "repl.h"
 #include "vm.h"
 #include "log.h"
-#include "window.h"
 
 int main(int argc, const char* argv[])
 {
-    printf("%s", c8_banner);
+    printf("%s\n", C8_BANNER);
 
     c8_log_info("Starting up...");
     c8_log_info("Endianess identified: %s", (c8_big_endian() ? "big" : "little"));

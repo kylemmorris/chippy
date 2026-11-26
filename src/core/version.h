@@ -35,7 +35,7 @@
 // TODO: Enable this for debug, disable otherwise
 #define C8_DEBUG 1
 
-static const char* const c8_banner =
+static const char* const C8_BANNER =
     "Chippy CHIP-8 Emulator v" C8_VERSION
     #if C8_PLATFORM_WINDOWS
     " (Windows)"
